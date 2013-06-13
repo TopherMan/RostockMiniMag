@@ -8,7 +8,7 @@ use <idler_end.scad>;
 use <carriage.scad>;
 use <platform.scad>;
 use <rod.scad>;
-use <extruder_v2.scad>;
+use <extruder.scad>;
 
 aluminum = [0.9, 0.9, 0.9];
 steel = [0.8, 0.8, 0.9];
