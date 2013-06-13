@@ -9,18 +9,21 @@ module motor_end() {
     difference() {
     union() {
       bracket(h);
-      for (x = [-30, 30]) {
+      for (x = [-40, 40]) {
         // Diagonal fins.
-        translate([x, 29.5, 0]) intersection() {
+        translate([x, 27.5, 0]) rotate([0,0,-sign(x)*30]) intersection() {
           cube([5, 30, h], center=true);
           rotate([45, 0, 0]) translate([0, -50, 0])
             cube([20, 100, 100], center=true);
         }
         // Extra mounting screw holes.
-        translate([x, 47, 4-h/2]) difference() {
-          cylinder(r=5, h=8, center=true, $fn=24);
-          translate([0, 1, 0]) cylinder(r=1.9, h=9, center=true, $fn=12);
-        }
+        //translate([x, 47, 4-h/2]) difference() {
+          //cylinder(r=5, h=8, center=true, $fn=24);
+          //translate([0, 1, 0]) cylinder(r=1.9, h=9, center=true, $fn=12);
+        //}
+
+			//Spot for the rods.
+			translate([sign(x)*54,35,-h/2+6]) rotate([0,0,-15+sign(x)*45]) rodholder(l=20,s=6);
       }
     }
     // Motor shaft (RepRap logo)

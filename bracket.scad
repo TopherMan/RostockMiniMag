@@ -1,3 +1,49 @@
+/*
+ * Copy & paste this into your copy of the Libs.scad library (http://www.thingiverse.com/thing:6021)
+ * 
+ * Since the top is cut at radius height of the theoretical cylinder inside the teardrop, 
+ * it might be a problem when the bridged part at top of the flat teardrop sags a bit during printing. 
+ * This might happen when the bridge gets longer, i.e. on larger teardrops.
+ * As a countermeasure itÕs possible to add a little bit height to the cut "for luck". 
+ * To do so, set the value of the luck parameter to the additional height. 
+ * However, the default value of this parameter is 0 and simply can be omitted in most cases.
+ *
+ * 2011 Eberhard Rensch, Pleasant Software
+ * License, GPL v2 or later
+ */
+ 
+module flatteardrop(radius=5, length=10, angle=90, luck=0) {
+	//$fn=resolution(radius); // This only works when inside Libs.scad
+							// If you use this module separately, comment this line out
+							// and/or set $fn to an absolute value (e.g. $fn = 36)
+		
+	sx1 = radius * sin(-45);
+	sx2 = radius * -sin(-45);
+	sy = radius * -cos(-45);
+	ex = 0;
+	ey = (sin(-135) + cos(-135)) * radius;
+	
+	dx= ex-sx1;
+	dy = ey-sy;
+	
+	eys = -radius-luck;
+	dys = eys-sy;
+	ex1 = sy+dys*dx/dy;
+	ex2 = -ex1;
+		
+	rotate([0, angle, 0]) union() {
+		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
+			circle(r = radius, center = true);
+		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
+			polygon(points = [
+				[sy, sx1],
+				[sy, sx2],
+				[eys, ex2],
+				[eys, ex1]], 
+				paths = [[0, 1, 2, 3]]);
+	}
+}
+
 $fa = 12;
 $fs = 0.5;
 
@@ -43,4 +89,18 @@ module bracket(h) {
   }
 }
 
-translate([0, 0, 10]) bracket(20);
+module rodholder(l,s) {
+	difference() {
+		union() {
+			translate([-l/2,0,0]) cube([l,s,s], center=false);
+			translate([-l/2,0,-s]) cube([l,s,s], center=false);
+			translate([-l/2,-s,-s]) cube([l,s,s], center=false);
+			rotate([0,90,0]) cylinder(r = s,h=l, center=true);
+		}
+		flatteardrop(radius=9.6/2, length=l+1, angle=90, luck=0);
+	}
+}
+
+//translate([0, 0, 10]) bracket(20);
+
+rodholder(l=30,s=6);
