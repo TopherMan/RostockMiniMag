@@ -98,9 +98,11 @@ module rodholder(l,s) {
 			rotate([0,90,0]) cylinder(r = s,h=l, center=true);
 		}
 		flatteardrop(radius=9.6/2, length=l+1, angle=90, luck=0);
+      translate([0,0,-s]) cube([12,3,6],center = true);
+      translate([0,0,-s]) cube([3,12,6],center = true);
 	}
 }
 
 //translate([0, 0, 10]) bracket(20);
 
-rodholder(l=30,s=6);
+rodholder(l=30,s=11);

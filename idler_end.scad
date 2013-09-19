@@ -42,6 +42,23 @@ module idler_end() {
     for (i = [-1, 1]) for (z = [-7, 7])
       translate([i, -1, z]) screws();
   }
+//Added here/////////////////////////////////
+translate([0,0,h/2]) for (x = [-42.5, 42.5]) {
+        // Diagonal fins.
+        translate([x, 32, 0]) rotate([0,0,-sign(x)*30]) intersection() {
+          cube([5, 40, h], center=true);
+          rotate([65, 0, 0]) translate([0, -45, 0])
+            cube([20, 100, 100], center=true);
+        }
+        // Extra mounting screw holes.
+        //translate([x, 47, 4-h/2]) difference() {
+          //cylinder(r=5, h=8, center=true, $fn=24);
+          //translate([0, 1, 0]) cylinder(r=1.9, h=9, center=true, $fn=12);
+        //}
+
+			//Spot for the rods.
+			translate([sign(x)*59.2,37,-h/2+11]) rotate([0,0,sign(x)*60]) rodholder(l=20,s=11);
+      }
 }
 
 idler_end();
