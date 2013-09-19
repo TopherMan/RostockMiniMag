@@ -15,7 +15,7 @@ y = 16; // Micro switch center.
 
 module idler_end() {
   translate([0, 0, h/2]) 
-  difference() {
+  rotate([0,180,0]) difference() {
     union() {
       bracket(h);
       translate([0, 7.5, 0]) rotate([90 - tilt, 0, 0]) bearing_mount();
@@ -24,7 +24,7 @@ module idler_end() {
           cube([19.6, 6.34, 10.2], center=true);
       difference() {
         translate([20, 11.88, -h/2+5])
-          cube([18, 8, 10], center=true);
+          cube([28, 8, 10], center=true);
         translate([x, y, -h/2+4]) rotate([0, 0, 15])
           cube([30, 6.34, 20], center=true);
         translate([30, 12, -h/2+5])
